@@ -111,7 +111,7 @@ A more detailed description of the boot sequence can be found in this section.
 | Timer                            | 0x7200_0000   | 0x72FF_FFFF    |
 | CoreTimer_0 / MIV_ESS_APBSLOT3   | 0x7300_0000   | 0x73FF_FFFF    |
 | CoreTimer_1 / MIV_ESS_APBSLOT4   | 0x7400_0000   | 0x74FF_FFFF    |
-| CoreGPIO_OUT                     | 0x7500_0000   | 0x75FF_FFFF    |
+| CoreGPIO                         | 0x7500_0000   | 0x75FF_FFFF    |
 | SPI                              | 0x7600_0000   | 0x76FF_FFFF    |
 | uDMA                             | 0x7800_0000   | 0x78FF_FFFF    |
 | WDOG                             | 0x7900_0000   | 0x79FF_FFFF    |

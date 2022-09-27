@@ -1,6 +1,6 @@
 ## Mi-V Extended Subsystem Design Guide Configuration 2: I2C Write & Boot
-This folder contains Tcl scripts that build Libero SoC v2022.1 MIV_ESS DGC2 design project for the Future Avalanche Board. The script is executed in Libero SoC to generate the sample design. 
-> Design is catered for Libero SoC v2022.1. Using older versions of Libero SoC will result in errors.
+This folder contains Tcl scripts that build Libero SoC v2022.2 MIV_ESS DGC2 design project for the Future Avalanche Board. The script is executed in Libero SoC to generate the sample design. 
+> Design is catered for Libero SoC v2022.2. Using older versions of Libero SoC will result in errors.
 
 #### PF_Avalanche_MIV_RV32_BaseDesign
 
@@ -55,7 +55,7 @@ The complete set of script arguments are documented here.
 ## <a name="Software Provided"></a> Software Provided
 There are two programs included with this configuration:
 * **miv-rv32i-systick-blinky.hex**: A Hex program configured to run from TCM's address (0x4000_0000). The program is initialized in the LSRAM component at 0x8000_0000 and it is accessible over the AHB interface.
-    > The example hex program was created using  miv-rv32i-systick-blinky in release mode (miv32i-Release). For more information about the project go to bare metal example: [miv-rv32i-systick-blinky](https://github.com/Mi-V-Soft-RISC-V/miv-rv32-bare-metal-examples/tree/main/applications/miv-rv32-hal/miv-rv32i-systick-blinky)
+    > The example hex program was created using  miv-rv32i-systick-blinky in release mode (miv32i-Release). For more information about the project go to bare metal example: [miv-rv32i-systick-blinky](https://github.com/Mi-V-Soft-RISC-V/miv-rv32-bare-metal-examples/tree/main/driver-examples/miv-rv32-hal/miv-rv32i-systick-blinky)
 
 * **miv-rv32-ess-bootloader.elf**: The supplied Bootloader .elf file is used to copy data from the LSRAM (SRC_MEM) @0x8000_0000 to external I2C Flash memory (Dual EE Click board required)
     > The .elf program was compiled using 'miv-rv32-ess-bootloader' in Bootstrap mode. For more information about the project go to bare metal example: [miv-rv32-ess-bootloader](https://github.com/Mi-V-Soft-RISC-V/miv-rv32-bare-metal-examples/tree/main/applications/bootloaders/miv-rv32-bootloader)

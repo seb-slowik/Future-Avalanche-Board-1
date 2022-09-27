@@ -91,9 +91,10 @@ The Libero designs include the following features:
 * User peripherals: MIV_ESS, 2 Timers, UART, 2 GPIO Inputs and 4 GPIO Outputs (GPIOs use fixed configs for simplicity and better resource utilization)
 
 
-The peripherals for MIV_RV32 configuration designs are located at the following addresses.
+The peripherals in this design are located at the following addresses.
 
-| Peripheral                       | Address Start | Address End    |
+#### MIV_RV32 based configurations
+| Peripheral (MIV_ESS)             | Address Start | Address End    |
 | ------------------------------:  |:-------------:|:--------------:|
 | PLIC                             | 0x7000_0000   | 0x70FF_FFFF    |
 | CoreUARTapb                      | 0x7100_0000   | 0x71FF_FFFF    |
@@ -113,13 +114,12 @@ The peripherals for MIV_RV32 configuration designs are located at the following 
 | SRAM/TCM                         | 0x8000_0000   | 0x8000_7FFF    |
 
 
-The peripherals in this design are located at the following addresses.
-
-| Peripheral    | Address       |
-| ------------- |:-------------:|
-| CoreUARTapb   | 0x7000_1000   |
-| CoreGPIO_IN   | 0x7000_2000   |
-| CoreTimer_0   | 0x7000_3000   |
-| CoreTimer_1   | 0x7000_4000   |
-| CoreGPIO_OUT  | 0x7000_5000   |
-| SRAM          | 0x8000_0000   |
+#### Legacy core based configurations:
+| Peripheral (Standalone)| Address       |
+| ----------------------:|:-------------:|
+| CoreUARTapb            | 0x7000_1000   |
+| CoreGPIO_IN            | 0x7000_2000   |
+| CoreTimer_0            | 0x7000_3000   |
+| CoreTimer_1            | 0x7000_4000   |
+| CoreGPIO_OUT           | 0x7000_5000   |
+| SRAM                   | 0x8000_0000   |

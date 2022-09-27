@@ -114,17 +114,14 @@ The peripherals for MIV_RV32 configuration designs are located at the following 
 | MIV_ESS_APBSLOTF_BASE            | 0x7F00_0000   | 0x7FFF_FFFF    |
 | SRAM/TCM                         | 0x8000_0000   | 0x8000_7FFF    |
 
-
-Peripherals addresses for legacy cores are as 
-
-| Peripheral    | Address   |
+| Peripheral    | Address       |
 | ------------- |:-------------:|
 | CoreUARTapb   | 0x7000_1000   |
 | CoreGPIO_IN   | 0x7000_2000   |
 | CoreTimer_0   | 0x7000_3000   |
 | CoreTimer_1   | 0x7000_4000   |
 | CoreGPIO_OUT  | 0x7000_5000   |
-| SRAM          | 0x8000_0000   |
+| SRAM     | 0x8000_0000|
 
 | Script                                | Configuration | Memory     | Address                   |
 | PF_Avalanche_MIV_RV32_BaseDesign      | CFG1          | SRAM/TCM   | 0x8000_0000 / 0x4000_0000 |

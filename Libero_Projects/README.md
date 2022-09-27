@@ -1,5 +1,5 @@
 ## Future Avalanche Board Mi-V Sample FPGA Designs
-This folder contains Tcl scripts that build Libero SoC v2022.1 design projects for the Future Avalanche Board. These scripts are executed in Libero SoC to generate the sample designs. All Configuration (CFG) design cores boot from memory at 0x8000_0000.
+This folder contains Tcl scripts that build Libero SoC v2022.2 design projects for the Future Avalanche Board. These scripts are executed in Libero SoC to generate the sample designs. All Configuration (CFG) design cores boot from memory at 0x8000_0000.
 
 > MI-V Extended Subsystem Design Guide Configurations:
 > * For **Design Guide Configuration - DGC2: I2C Write & Boot** refer to this [DGC2 README](import/components/IMC_DGC2/README.md)
@@ -92,7 +92,27 @@ The Libero designs include the following features:
 > MI-V Extended Subsystem Design Guide Configurations:
 > * For **DGC2: I2C Write & Boot** design features, refer to [DGC2 README](import/components/IMC_DGC2/README.md)
 
-The peripherals in this design are located at the following addresses.
+The peripherals for MIV_RV32 configuration designs are located at the following addresses.
+
+| Peripheral                       | Address Start | Address End    |
+| ------------------------------:  |:-------------:|:--------------:|
+| PLIC                             | 0x7000_0000   | 0x70FF_FFFF    |
+| CoreUARTapb                      | 0x7100_0000   | 0x71FF_FFFF    |
+| Timer                            | 0x7200_0000   | 0x72FF_FFFF    |
+| CoreTimer_0 / MIV_ESS_APBSLOT3   | 0x7300_0000   | 0x73FF_FFFF    |
+| CoreTimer_1 / MIV_ESS_APBSLOT4   | 0x7400_0000   | 0x74FF_FFFF    |
+| CoreGPIO                         | 0x7500_0000   | 0x75FF_FFFF    |
+| SPI                              | 0x7600_0000   | 0x76FF_FFFF    |
+| uDMA                             | 0x7800_0000   | 0x78FF_FFFF    |
+| WDOG                             | 0x7900_0000   | 0x79FF_FFFF    |
+| I2C                              | 0x7A00_0000   | 0x7AFF_FFFF    |
+| MIV_ESS_APBSLOTB_BASE            | 0x7B00_0000   | 0x7BFF_FFFF    |
+| MIV_ESS_APBSLOTC_BASE            | 0x7C00_0000   | 0x7CFF_FFFF    |
+| MIV_ESS_APBSLOTD_BASE            | 0x7D00_0000   | 0x7DFF_FFFF    |
+| MIV_ESS_APBSLOTE_BASE            | 0x7E00_0000   | 0x7EFF_FFFF    |
+| MIV_ESS_APBSLOTF_BASE            | 0x7F00_0000   | 0x7FFF_FFFF    |
+
+Peripherals addresses for legacy cores are as 
 
 | Peripheral    | Address   |
 | ------------- |:-------------:|
@@ -101,4 +121,11 @@ The peripherals in this design are located at the following addresses.
 | CoreTimer_0   | 0x7000_3000   |
 | CoreTimer_1   | 0x7000_4000   |
 | CoreGPIO_OUT  | 0x7000_5000   |
-| SRAM| 0x8000_0000|
+| SRAM          | 0x8000_0000   |
+
+| Script                                | Configuration | Memory     | Address                   |
+| PF_Avalanche_MIV_RV32_BaseDesign      | CFG1          | SRAM/TCM   | 0x8000_0000 / 0x4000_0000 |
+|                                       | CFG2          | SRAM       | 0x8000_0000               |
+|                                       | CFG3          | SRAM       | 0x8000_0000               |
+| PF_Avalanche_MIV_RV32IMA_BaseDesign   | CFG1          |
+

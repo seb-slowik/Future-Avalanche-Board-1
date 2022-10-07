@@ -24,11 +24,10 @@ The Libero_Projects folder contains [sample Mi-V Libero designs](Libero_Projects
 
 ## Design Features
 The Libero designs include the following features:
-* A soft RISC-V processor.
+* A soft RISC-V processor operating at 50 MHz
 * A RISC-V debug block allowing on-target debug using SoftConsole
-* An Extended subsystem with peripheral cores
-* The operating frequency of the design is 50MHz
-* Target memory is SRAM/TCM (32kB)
+* An Extended Subsystem with integrated peripherals
+* Target SRAM/TCM memory (32kB)
 * User peripherals: MIV_ESS, 2 Timers, UART, 2 GPIO Inputs and 4 GPIO Outputs (GPIOs use fixed configs for simplicity and better resource utilization)
 
 ## Target Hardware

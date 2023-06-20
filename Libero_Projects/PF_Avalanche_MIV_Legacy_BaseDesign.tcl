@@ -13,8 +13,8 @@ source $scriptDir/import/proc_blocks.tcl
 # Set valid configurations
 set hwPlatform "PF_AVAL"
 set hwFamily "POLARFIRE"
-set softCpu "MIV_RV32"
-set validConfigs [list "CFG1" "CFG2" "CFG3" "DGC2"]
+set softCpu "MIV_Legacy"
+set validConfigs [list "CFG1" "CFG2" "CFG3"]
 set validDesignFlows [list "SYNTHESIZE" "PLACE_AND_ROUTE" "GENERATE_BITSTREAM" "EXPORT_PROGRAMMING_FILE"]
 set validDieTypes [list "PS" "ES" ""]
 
@@ -34,7 +34,7 @@ print_message "Runnig script: $scriptPath \nDesign Arguments: $config $designFlo
 
 # Configure Libero project files and directories
 append projectName $hwPlatform _ $dieType _ $softCpu _ $config _ $sdName
-append projectFolderName MIV_ $config _BD
+append projectFolderName MIV_ Legacy_ $config _BD
 set projectDir $scriptDir/$projectFolderName
 
 # Build Libero design project for selected configuration and hardware
@@ -73,9 +73,8 @@ if {[file exists $projectDir] == 1} then {
 # Download the required direct cores
 #download_required_direct_cores "$hwPlatform" "$softCpu" "$config"
 
-# Copy the example software program into the project directory (and bootloader elf for DGC1 and DGC2 configs)
+# Copy the example software program into the project directory
 file copy -force $scriptDir/import/software_example/$softCpu/$config/hex $projectDir
-if {$config in {"DGC1" "DGC2"}} {file copy -force $scriptDir/import/software_example/$softCpu/$config/bootloader_elf $projectDir}
 
 # Import and build the design's SmartDesign
 print_message "Building the $sdName..."
@@ -93,6 +92,10 @@ pre_configure_place_and_route
 # Run 'Synthesize' from the design flow
 if {"$designFlow" == "SYNTHESIZE"} then {
 	print_message "Starting Synthesis..."
+	if {"$config" == "CFG3"} {
+		configure_tool -name {SYNTHESIZE} -params {SYNPLIFY_OPTIONS:set_option -looplimit 4000} 
+		print_alternative_message "The loop limit had to be increased to 4000 for this MIV_RV32IMA_L1_AXI design."
+		}
     run_tool -name {SYNTHESIZE}
     save_project
 	print_message "Synthesis Complete."
@@ -104,20 +107,8 @@ if {"$designFlow" == "SYNTHESIZE"} then {
 	save_project
 	print_message "Place and Route Completed successfully."
 
-	# Generate Design Initialization Data -- only specific PolarFire Eval TCM designs
-	if {($hwFamily == "POLARFIRE") && ($config == "CFG3")} {
-		# configure_ram_device "$scriptDir" "$config" "$sdName" "$projectDir"
-        puts "Info: This configuration does not include example software prorgam booting from memory after hardware programming."
-	}
-
 # Run 'Generate Bitstream' from the design flow
 } elseif {"$designFlow" == "GENERATE_BITSTREAM"} then {
-	# Generate Design Initialization Data -- only specific PolarFire Eval TCM designs
-	if {($hwFamily == "POLARFIRE") && ($config == "CFG3")} {
-		# configure_ram_device "$scriptDir" "$config" "$sdName" "$projectDir"
-        puts "Info: This configuration does not include example software prorgam booting from memory after hardware programming."
-	}
-	
 	print_message "Generating Bitstream..."
 	run_verify_timing
     run_tool -name {GENERATEPROGRAMMINGDATA}
@@ -130,14 +121,8 @@ if {"$designFlow" == "SYNTHESIZE"} then {
 	print_message "Exporting Programming Files..."
 
 	run_verify_timing
-
+	
 	run_tool -name {GENERATEPROGRAMMINGFILE}
-	# Generate Design Initialization Data -- only specific PolarFire Eval TCM designs
-	if {($hwFamily == "POLARFIRE") && ($config == "CFG3")} {
-		# configure_ram_device "$scriptDir" "$config" "$sdName" "$projectDir"
-        puts "Info: This configuration does not include example software prorgam booting from memory after hardware programming."
-	}
-
 	export_prog_job \
 		-job_file_name $projectName \
 		-export_dir $projectDir/designer/$sdName/export \

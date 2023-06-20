@@ -13,11 +13,6 @@
 # User Locked I/O Bank Settings
 # 
 
-set_iobank -bank_name Bank5  \
-    -vcci 3.30               \
-    -fixed true              \
-    -update_iostd true
-
 
 # 
 # Unlocked I/O Bank Settings
@@ -40,44 +35,42 @@ set_io -port_name {REF_CLK}  \
 	-DIRECTION INPUT
 
 # -- User I/O -- #
+    
+set_io -port_name {BOOTSTRAP_BYPASS}  \
+    -pin_name E13                     \
+    -fixed true                       \
+    -io_std LVCMOS33                  \
+    -DIRECTION INPUT    
 
-set_io -port_name {PUSH_BTN_1}  \
-    -pin_name E13                \
-    -fixed true                  \
-    -DIRECTION INPUT
-
-set_io -port_name {PUSH_BTN_2}  \
-    -pin_name E14                 \
-    -fixed true                  \
-    -DIRECTION INPUT
+set_io -port_name {SYS_RESET_REQ}    \
+    -pin_name E14                    \
+    -io_std LVCMOS33                 \
+    -DIRECTION INPUT      
 	
 set_io -port_name USER_RST  \
-    -pin_name F5          \
-    -fixed true           \
+    -pin_name F5            \
+    -fixed true             \
+    -io_std LVCMOS33        \
     -DIRECTION INPUT
 
 
 # -- LEDs I/O --#
 
-set_io -port_name {LED_1}  \
+set_io -port_name {GPIO_OUT[0]}  \
     -pin_name D7                 \
-    -fixed true                  \
-    -DIRECTION OUTPUT
+    -io_std LVCMOS33 
 
-set_io -port_name {LED_2}  \
+set_io -port_name {GPIO_OUT[1]}  \
     -pin_name D8                 \
-    -fixed true                  \
-    -DIRECTION OUTPUT
+    -io_std LVCMOS33 
 
-set_io -port_name {LED_3}  \
+set_io -port_name {GPIO_OUT[2]}  \
     -pin_name D9                 \
-    -fixed true                  \
-    -DIRECTION OUTPUT
+    -io_std LVCMOS33 
 
-set_io -port_name {LED_4}  \
+set_io -port_name {GPIO_OUT[3]}  \
     -pin_name D6                 \
-    -fixed true                  \
-    -DIRECTION OUTPUT
+    -io_std LVCMOS33 
 
 
 # -- UART RX/TX -- #
@@ -85,14 +78,31 @@ set_io -port_name {LED_4}  \
 set_io -port_name RX  \
     -pin_name F16     \
     -fixed true       \
+    -io_std LVCMOS33  \
     -DIRECTION INPUT
 
 
 set_io -port_name TX   \
     -pin_name F17      \
     -fixed true        \
+    -io_std LVCMOS33   \
     -DIRECTION OUTPUT
 
+
+# ----- I2C -----#
+set_io -port_name {SCL}   \
+    -pin_name C6          \
+    -fixed true           \
+    -RES_PULL Up          \
+    -io_std LVCMOS33      \
+	-DIRECTION Inout
+
+set_io -port_name {SDA}   \
+    -pin_name C7          \
+    -fixed true           \
+    -RES_PULL Up          \
+    -io_std LVCMOS33      \
+	-DIRECTION Inout
 
 # 
 # Dedicated Peripheral I/O Settings
@@ -139,13 +149,13 @@ set_io -port_name TRSTB  \
 # the other listed attributes have been applied
 # 
 
-#set_io -port_name CLK1_50M    \
-	-pin_name R1              	\
-	-fixed true               	\
+#set_io -port_name CLK1_50M     \
+	-pin_name R1            \
+	-fixed true             \
   -io_std LVCMOS25          	\
 	-DIRECTION INPUT
 #set_io -port_name REF_CLK_0  \
-    -io_std LVCMOS18         \
+    -io_std LVCMOS18          \
     -DIRECTION INPUT
 
 # 
@@ -153,98 +163,98 @@ set_io -port_name TRSTB  \
 # 
 
 #set_io -port_name AND1_Y  \
-    -pin_name A3          \
-    -fixed true           \
+    -pin_name A3           \
+    -fixed true            \
     -DIRECTION OUTPUT
 
 
 #set_io -port_name {A[0]}  \
-    -pin_name U5          \
-    -fixed true           \
+    -pin_name U5           \
+    -fixed true            \
     -DIRECTION OUTPUT
 
 
 #set_io -port_name {A[1]}  \
-    -pin_name U4          \
-    -fixed true           \
+    -pin_name U4           \
+    -fixed true            \
     -DIRECTION OUTPUT
 
 
 #set_io -port_name {A[2]}  \
-    -pin_name V4          \
-    -fixed true           \
+    -pin_name V4           \
+    -fixed true            \
     -DIRECTION OUTPUT
 
 
 #set_io -port_name {A[3]}  \
-    -pin_name W3          \
-    -fixed true           \
+    -pin_name W3           \
+    -fixed true            \
     -DIRECTION OUTPUT
 
 
 #set_io -port_name {A[4]}  \
-    -pin_name V5          \
-    -fixed true           \
+    -pin_name V5           \
+    -fixed true            \
     -DIRECTION OUTPUT
 
 
 #set_io -port_name {A[5]}  \
-    -pin_name W4          \
-    -fixed true           \
+    -pin_name W4           \
+    -fixed true            \
     -DIRECTION OUTPUT
 
 
 #set_io -port_name {A[6]}  \
-    -pin_name Y3          \
-    -fixed true           \
+    -pin_name Y3           \
+    -fixed true            \
     -DIRECTION OUTPUT
 
 
 #set_io -port_name {A[7]}  \
-    -pin_name AA3         \
-    -fixed true           \
+    -pin_name AA3          \
+    -fixed true            \
     -DIRECTION OUTPUT
 
 
 #set_io -port_name {A[8]}  \
-    -pin_name Y4          \
-    -fixed true           \
+    -pin_name Y4           \
+    -fixed true            \
     -DIRECTION OUTPUT
 
 
 #set_io -port_name {A[9]}  \
-    -pin_name Y5          \
-    -fixed true           \
+    -pin_name Y5           \
+    -fixed true            \
     -DIRECTION OUTPUT
 
 
 #set_io -port_name {A[10]}  \
-    -pin_name AA2          \
-    -fixed true            \
+    -pin_name AA2           \
+    -fixed true             \
     -DIRECTION OUTPUT
 
 
 #set_io -port_name {A[11]}  \
-    -pin_name AB2          \
-    -fixed true            \
+    -pin_name AB2           \
+    -fixed true             \
     -DIRECTION OUTPUT
 
 
 #set_io -port_name {A[12]}  \
-    -pin_name V6           \
-    -fixed true            \
+    -pin_name V6            \
+    -fixed true             \
     -DIRECTION OUTPUT
 
 
 #set_io -port_name {A[13]}  \
-    -pin_name W6           \
-    -fixed true            \
+    -pin_name W6            \
+    -fixed true             \
     -DIRECTION OUTPUT
 
 
 #set_io -port_name {A[14]}  \
-    -pin_name AB3          \
-    -fixed true            \
+    -pin_name AB3           \
+    -fixed true             \
     -DIRECTION OUTPUT
 
 

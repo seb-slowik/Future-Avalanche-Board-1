@@ -40,17 +40,17 @@ set_io -port_name {REF_CLK}  \
 
 # -- User I/O -- #
 
-set_io -port_name {PUSH_BTN_1}  \
+set_io -port_name {SW_1}  \
     -pin_name E13                \
     -fixed true                  \
     -DIRECTION INPUT
 
-set_io -port_name {PUSH_BTN_2}  \
+set_io -port_name {SW_2}  \
     -pin_name E14                 \
     -fixed true                  \
     -DIRECTION INPUT
 	
-set_io -port_name USER_RST  \
+set_io -port_name {USER_RST}  \
     -pin_name F5          \
     -fixed true           \
     -DIRECTION INPUT

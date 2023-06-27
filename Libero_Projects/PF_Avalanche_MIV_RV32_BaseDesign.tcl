@@ -30,7 +30,7 @@ set sdBuildScript [get_config_builder $config $validConfigs $softCpu]
 set legacyCpu [get_legacy_core_name $config]
 get_die_configuration $hwPlatform $dieType
 set cjdRstType [expr {$softCpu eq "MIV_RV32" ? "TRSTN" : "TRST"}]
-print_message "Runnig script: $scriptPath \nDesign Arguments: $config $designFlow $dieType \nDesign Build Script: $sdBuildScript"
+print_message "Info: Runnig script: $scriptPath \nDesign Arguments: $config $designFlow $dieType \nDesign Build Script: $sdBuildScript"
 
 # Configure Libero project files and directories
 append projectName $hwPlatform _ $dieType _ $softCpu _ $config _ $sdName
@@ -39,9 +39,9 @@ set projectDir $scriptDir/$projectFolderName
 
 # Build Libero design project for selected configuration and hardware
 if {[file exists $projectDir] == 1} then {
-	print_message "Error: A project with '$config' configuration already exists for the '$hwPlatform'."
+	print_message "Info: Error: A project with '$config' configuration already exists for the '$hwPlatform'."
 } else {
-	print_message "Creating a new project for the '$hwPlatform' board."
+	print_message "Info: Creating a new project for the '$hwPlatform' board."
 	new_project \
 		-location $projectDir \
 		-name $projectName \
@@ -78,31 +78,31 @@ file copy -force $scriptDir/import/software_example/$softCpu/$config/hex $projec
 if {$config in {"DGC1" "DGC2"}} {file copy -force $scriptDir/import/software_example/$softCpu/$config/bootloader_elf $projectDir}
 
 # Import and build the design's SmartDesign
-print_message "Building the $sdName..."
+print_message "Info: Building the $sdName..."
 source $scriptDir/import/build_smartdesign/$sdBuildScript
-print_message "$sdName Built."
+print_message "Info: $sdName Built."
 
 # Optimizations - add constraints, modify package files if needed
-print_message "Applying Design Optimizations and Constraints..."
+print_message "Info: Applying Design Optimizations and Constraints..."
 source $scriptDir/import/design_optimization.tcl
-print_message "Optimization and Constraints Applied."
+print_message "Info: Optimization and Constraints Applied."
 
 # Configure 'Place & Route' tool
 pre_configure_place_and_route
 
 # Run 'Synthesize' from the design flow
 if {"$designFlow" == "SYNTHESIZE"} then {
-	print_message "Starting Synthesis..."
+	print_message "Info: Starting Synthesis..."
     run_tool -name {SYNTHESIZE}
     save_project
-	print_message "Synthesis Complete."
+	print_message "Info: Synthesis Complete."
 
 # Run 'Place & Route' from the design flow
 } elseif {"$designFlow" == "PLACE_AND_ROUTE"} then {
-	print_message "Starting Place and Route..."
+	print_message "Info: Starting Place and Route..."
 	run_verify_timing
 	save_project
-	print_message "Place and Route Completed successfully."
+	print_message "Info: Place and Route Completed successfully."
 
 	# Generate Design Initialization Data -- only specific PolarFire Eval TCM designs
 	if {($hwFamily == "POLARFIRE") && ($config == "CFG3")} {
@@ -118,16 +118,16 @@ if {"$designFlow" == "SYNTHESIZE"} then {
         puts "Info: This configuration does not include example software prorgam booting from memory after hardware programming."
 	}
 	
-	print_message "Generating Bitstream..."
+	print_message "Info: Generating Bitstream..."
 	run_verify_timing
     run_tool -name {GENERATEPROGRAMMINGDATA}
     run_tool -name {GENERATEPROGRAMMINGFILE}
     save_project
-	print_message "Bitstream Generated successfully."
+	print_message "Info: Bitstream Generated successfully."
 
 # Run 'Export Programming Job File' from the design flow (into default location)
 } elseif {"$designFlow" == "EXPORT_PROGRAMMING_FILE"} then {
-	print_message "Exporting Programming Files..."
+	print_message "Info: Exporting Programming Files..."
 
 	run_verify_timing
 
@@ -144,7 +144,7 @@ if {"$designFlow" == "SYNTHESIZE"} then {
 		-bitstream_file_type {TRUSTED_FACILITY} \
 		-bitstream_file_components {}
 	save_project
-	print_message "Programming Files Exported."
+	print_message "Info: Programming Files Exported."
 
 } else {
 	print_message "Info: No design flow tool run."

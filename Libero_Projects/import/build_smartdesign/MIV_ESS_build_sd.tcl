@@ -108,6 +108,11 @@ sd_instantiate_macro -sd_name ${sdName} -macro_name {BIBUF} -instance_name {BIBU
 sd_invert_pins -sd_name ${sdName} -pin_names {BIBUF_1:E}
 
 
+# Add BIBUF_1 instance
+sd_instantiate_macro -sd_name ${sd_name} -macro_name {BIBUF} -instance_name {BIBUF_1}
+sd_invert_pins -sd_name ${sd_name} -pin_names {BIBUF_1:E}
+
+
 # Add COREJTAGDEBUG_C0_0 instance
 sd_instantiate_component -sd_name ${sdName} -component_name {COREJTAGDEBUG_C0} -instance_name {COREJTAGDEBUG_C0_0}
 

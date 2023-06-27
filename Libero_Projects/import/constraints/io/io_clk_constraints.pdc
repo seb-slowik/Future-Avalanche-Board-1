@@ -1,0 +1,41 @@
+# Microsemi I/O Physical Design Constraints file
+
+# User I/O Constraints file 
+
+# Version: PolarFire v2.3 12.200.35.9
+
+# Family: PolarFire , Die: MPF300T , Package: FCG484
+
+# Date generated: Mon Jan 07 16:35:59 2019 
+
+
+# 
+# User Locked I/O Bank Settings
+# 
+
+set_iobank -bank_name Bank4  \
+    -vcci 2.50               \
+    -fixed true              \
+    -update_iostd true
+
+
+# 
+# Unlocked I/O Bank Settings
+# The I/O Bank Settings can be locked by directly editing this file
+# or by making changes in the I/O Attribute Editor
+# 
+
+# 
+# User Locked I/O settings
+# 
+
+# Clock (50MHz) - Bank-4 (2.5V) #
+# R1 (GPIO174PB4/CLKIN_W_7/CCC_NW_CLKIN_W_7/CCC_NW_PLL0_OUT0)
+# J3 (GPIO215PB4/CLKIN_W_5/CCC_NW_CLKIN_W_5)
+# 
+
+set_io -port_name {REF_CLK}  \
+	-pin_name J3              	\
+	-fixed true               	\
+    -io_std LVCMOS25          	\
+	-DIRECTION INPUT

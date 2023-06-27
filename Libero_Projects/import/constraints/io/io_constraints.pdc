@@ -1,30 +1,24 @@
-# Microsemi I/O Physical Design Constraints file
-
-# User I/O Constraints file 
-
-# Version: PolarFire v2.3 12.200.35.9
-
-# Family: PolarFire , Die: MPF300T , Package: FCG484
-
-# Date generated: Mon Jan 07 16:35:59 2019 
-
-
+#-------------------------------------------------------------------------------
+# Avalanche board I/O Physical Design Constraints file
 # 
-# User Locked I/O Bank Settings
-# 
-
-set_iobank -bank_name Bank5  \
-    -vcci 3.30               \
-    -fixed true              \
-    -update_iostd true
-
+# Board rev   : R3
+# FPGA
+#   Family    : PolarFire
+#   Die       : MPF300TS
+#   Package   : FGC484 
+#
+# Created on  : October 2017
+# Author      : Frederic Vachon
+#
+# (c) Copyright 2020 Future Electronics - Advanced Engineering Group 
+#     All rights reserved
+#-------------------------------------------------------------------------------
 
 # 
 # Unlocked I/O Bank Settings
 # The I/O Bank Settings can be locked by directly editing this file
 # or by making changes in the I/O Attribute Editor
 # 
-
 
 # 
 # User Locked I/O settings
@@ -45,17 +39,20 @@ set_io -port_name {REF_CLK}  \
 
 set_io -port_name {SW_1}  \
     -pin_name E13                \
-    -fixed true                  \
+	-fixed true               	\
+    -io_std LVCMOS33          	\
     -DIRECTION INPUT
 
 set_io -port_name {SW_2}  \
     -pin_name E14                 \
-    -fixed true                  \
+	-fixed true               	\
+    -io_std LVCMOS33          	\
     -DIRECTION INPUT
 	
 set_io -port_name {USER_RST}  \
-    -pin_name F5          \
-    -fixed true           \
+    -pin_name F5                 \
+	-fixed true               	\
+    -io_std LVCMOS33          	\
     -DIRECTION INPUT
 
 
@@ -63,36 +60,42 @@ set_io -port_name {USER_RST}  \
 
 set_io -port_name {LED_1}  \
     -pin_name D7                 \
-    -fixed true                  \
+	-fixed true               	\
+    -io_std LVCMOS33          	\
     -DIRECTION OUTPUT
 
 set_io -port_name {LED_2}  \
     -pin_name D8                 \
-    -fixed true                  \
+	-fixed true               	\
+    -io_std LVCMOS33          	\
     -DIRECTION OUTPUT
 
 set_io -port_name {LED_3}  \
     -pin_name D9                 \
-    -fixed true                  \
+	-fixed true               	\
+    -io_std LVCMOS33          	\
     -DIRECTION OUTPUT
 
 set_io -port_name {LED_4}  \
     -pin_name D6                 \
-    -fixed true                  \
+	-fixed true               	\
+    -io_std LVCMOS33          	\
     -DIRECTION OUTPUT
 
 
 # -- UART RX/TX -- #
 
 set_io -port_name RX  \
-    -pin_name F16     \
-    -fixed true       \
+    -pin_name F16                 \
+	-fixed true               	\
+    -io_std LVCMOS33          	\
     -DIRECTION INPUT
 
 
 set_io -port_name TX   \
-    -pin_name F17      \
-    -fixed true        \
+    -pin_name F17                 \
+	-fixed true               	\
+    -io_std LVCMOS33          	\
     -DIRECTION OUTPUT
 
 

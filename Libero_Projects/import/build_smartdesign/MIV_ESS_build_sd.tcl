@@ -27,6 +27,7 @@ create_smartdesign -sd_name ${sdName}
 auto_promote_pad_pins -promote_all 0
 
 # Create top level Scalar Ports
+sd_create_scalar_port -sd_name ${sdName} -port_name {REF_CLK} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sdName} -port_name {BOOTSTRAP_BYPASS} -port_direction {IN} 
 sd_create_scalar_port -sd_name ${sdName} -port_name {SYS_RESET_REQ} -port_direction {IN}
 
@@ -103,14 +104,14 @@ sd_instantiate_component -sd_name ${sdName}  -component_name {PF_CCC_C0} -instan
 sd_instantiate_macro -sd_name ${sdName} -macro_name {CLKBUF} -instance_name {CLKBUF_0} 
 
 
+# Add BIBUF_0 instance
+sd_instantiate_macro -sd_name ${sdName} -macro_name {BIBUF} -instance_name {BIBUF_0}
+sd_invert_pins -sd_name ${sdName} -pin_names {BIBUF_0:E}
+
+
 # Add BIBUF_1 instance
 sd_instantiate_macro -sd_name ${sdName} -macro_name {BIBUF} -instance_name {BIBUF_1}
 sd_invert_pins -sd_name ${sdName} -pin_names {BIBUF_1:E}
-
-
-# Add BIBUF_1 instance
-sd_instantiate_macro -sd_name ${sd_name} -macro_name {BIBUF} -instance_name {BIBUF_1}
-sd_invert_pins -sd_name ${sd_name} -pin_names {BIBUF_1:E}
 
 
 # Add COREJTAGDEBUG_C0_0 instance

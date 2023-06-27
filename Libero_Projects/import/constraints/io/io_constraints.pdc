@@ -30,12 +30,15 @@ set_iobank -bank_name Bank5  \
 # User Locked I/O settings
 # 
 
-# -- Clock (50MHz) -- #
-# REF_CLK is connected to CCC_NW_CKLIN_W_7 (DLL Connectivity)
+# Clock (50MHz) - Bank-4 (2.5V) #
+# R1 (GPIO174PB4/CLKIN_W_7/CCC_NW_CLKIN_W_7/CCC_NW_PLL0_OUT0)
+# J3 (GPIO215PB4/CLKIN_W_5/CCC_NW_CLKIN_W_5)
+# 
 
 set_io -port_name {REF_CLK}  \
-	-pin_name R1              	\
+	-pin_name J3              	\
 	-fixed true               	\
+    -io_std LVCMOS25          	\
 	-DIRECTION INPUT
 
 # -- User I/O -- #

@@ -14,7 +14,6 @@ set_root $sdName
 #}
 
 # Import constraint files for all base and design guide configurations
-import_files -sdc $scriptDir/import/constraints/io_sys_constraints.sdc
 import_files -sdc $scriptDir/import/constraints/io_jtag_constraints.sdc
 
 if {$config in {"CFG1" "CFG2" "CFG3"}} {
@@ -29,17 +28,14 @@ if {$config in {"CFG1" "CFG2" "CFG3"}} {
 organize_tool_files -tool {PLACEROUTE} \
 	-file $projectDir/constraint/io/io_constraints.pdc \
 	-file $projectDir/constraint/io_jtag_constraints.sdc \
-	-file $projectDir/constraint/io_sys_constraints.sdc \
 	-module ${sdName}::work -input_type {constraint}
 
 organize_tool_files -tool {SYNTHESIZE} \
 	-file $projectDir/constraint/io_jtag_constraints.sdc \
-	-file $projectDir/constraint/io_sys_constraints.sdc \
 	-module ${sdName}::work -input_type {constraint}
 
 organize_tool_files -tool {VERIFYTIMING} \
 	-file $projectDir/constraint/io_jtag_constraints.sdc \
-	-file $projectDir/constraint/io_sys_constraints.sdc \
 	-module ${sdName}::work -input_type {constraint}
 
 run_tool -name {CONSTRAINT_MANAGEMENT}

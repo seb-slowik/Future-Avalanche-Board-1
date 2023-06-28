@@ -29,7 +29,7 @@
 # REF_CLK is connected to CCC_NW_CKLIN_W_7 (DLL Connectivity)
 
 set_io -port_name {REF_CLK}  \
-	-pin_name R1              	\
+	-pin_name J3              	\
 	-fixed true               	\
     -io_std LVCMOS25          	\
 	-DIRECTION INPUT

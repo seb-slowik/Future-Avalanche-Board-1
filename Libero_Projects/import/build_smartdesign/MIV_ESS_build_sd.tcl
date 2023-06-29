@@ -9,6 +9,7 @@
 #This Tcl file sources other Tcl files to build the design(on which recursive export is run) in a bottom-up fashion
 
 #Sourcing the Tcl files for each of the design's components
+set cjdRstType [expr {$softCpu eq "MIV_RV32" ? "TRSTN" : "TRST"}]
 
 set sramMemComp "SRC_MEM"
 source $scriptDir/import/components/CORERESET_PF_C0.tcl 
@@ -19,9 +20,6 @@ source $scriptDir/import/components/dgc/MIV_ESS_${config}_C0.tcl
 source $scriptDir/import/components/dgc/${softCpu}_${config}_C0.tcl
 source $scriptDir/import/components/dgc/${sramMemComp}_C0.tcl
 
-
-# Specify CoreJTAGDebug component (name extension)
-set cjdRstType [expr {$softCpu eq "MIV_RV32" ? "TRSTN" : "TRST"}]
 
 # Creating SmartDesign BaseDesign
 create_smartdesign -sd_name ${sdName}

@@ -14,6 +14,7 @@ source $scriptDir/import/proc_blocks.tcl
 set hwPlatform "PF_AVAL"
 set hwFamily "POLARFIRE"
 set softCpu "MIV_RV32"
+set cpuRef "MIV_RV32"
 set validConfigs [list "CFG1" "CFG2" "CFG3" "DGC2"]
 set validDesignFlows [list "SYNTHESIZE" "PLACE_AND_ROUTE" "GENERATE_BITSTREAM" "EXPORT_PROGRAMMING_FILE"]
 set validDieTypes [list "PS" "ES" ""]
@@ -32,7 +33,7 @@ get_die_configuration $hwPlatform $dieType
 print_message "Runnig script: $scriptPath \nDesign Arguments: $config $designFlow $dieType \nDesign Build Script: $sdBuildScript"
 
 # Configure Libero project files and directories
-append projectName $hwPlatform _ $dieType _ $cpuGroup _ $config _ $sdName
+append projectName $hwPlatform _ $dieType _ $cpuRef _ $config _ $sdName
 append projectFolderName [expr { ($dieType eq "PS" ) ? "${softCpu}_${config}_BD" : "${softCpu}_${config}_BD_ES"}]
 set projectDir $scriptDir/$projectFolderName
 

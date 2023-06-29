@@ -34,7 +34,7 @@ print_message "Runnig script: $scriptPath \nDesign Arguments: $config $designFlo
 
 # Configure Libero project files and directories
 append projectName $hwPlatform _ $dieType _ $softCpu _ $config _ $sdName
-append projectFolderName MIV_ Legacy_ $config _BD
+append projectFolderName [expr { ($dieType eq "PS" ) ? "MIV_Legacy_${config}_BD" : "MIV_Legacy_${config}_BD_ES"}]
 set projectDir $scriptDir/$projectFolderName
 
 # Build Libero design project for selected configuration and hardware

@@ -36,6 +36,9 @@ print_message "Runnig script: $scriptPath \nDesign Arguments: $config $designFlo
 append projectName $hwPlatform _ $dieType _ $cpuRef _ $config _ $sdName
 append projectFolderName [expr { ($dieType eq "PS" ) ? "${cpuRef}_${config}_BD" : "${cpuRef}_${config}_BD_ES"}]
 set projectDir $scriptDir/$projectFolderName
+puts "Info: projectName: $projectName"
+puts "Info: projectFolderName: $projectFolderName"
+puts "Info: projectDir: $projectDir"
 
 # Build Libero design project for selected configuration and hardware
 if {[file exists $projectDir] == 1} then {

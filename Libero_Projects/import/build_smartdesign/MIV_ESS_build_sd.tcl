@@ -20,6 +20,9 @@ source $scriptDir/import/components/dgc/${softCpu}_${config}_C0.tcl
 source $scriptDir/import/components/dgc/${sramMemComp}_C0.tcl
 
 
+# Specify CoreJTAGDebug component (name extension)
+set cjdRstType [expr {$softCpu eq "MIV_RV32" ? "TRSTN" : "TRST"}]
+
 # Creating SmartDesign BaseDesign
 create_smartdesign -sd_name ${sdName}
 

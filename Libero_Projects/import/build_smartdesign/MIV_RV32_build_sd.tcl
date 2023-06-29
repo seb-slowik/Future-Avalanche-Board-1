@@ -23,6 +23,9 @@ source $scriptDir/import/components/${softCpu}_${config}_C0.tcl
 if {$config eq "CFG1"} {source $scriptDir/import/components/PF_SRAM_AHB_C0.tcl }
 if {$config eq "CFG2"} {source $scriptDir/import/components/PF_SRAM_AXI4_C0.tcl}
 
+# Specify CoreJTAGDebug component (name extension)
+set cjdRstType [expr {$softCpu eq "MIV_RV32" ? "TRSTN" : "TRST"}]
+
 # Creating SmartDesign BaseDesign
 create_smartdesign -sd_name ${sdName}
 

@@ -1,8 +1,9 @@
 # Libero SmartDesign builder script for PolarFire family hardware platforms
 # This builder is targetted at the following soft-CPU configurations:
 #
-#  MIV_RV32IMA_L1_AHB: CFG1 
-#  MIV_RV32IMA_L1_AHB: CFG2
+#  CPU: MIV_RV32IMAF_L1_AHB - CFG1 
+#  CPU: MIV_RV32IMA_L1_AHB - CFG1 
+#  CPU: RV32IMA_L1_AHB - CFG2
 #
 #Libero's TCL top level script
 #
@@ -22,10 +23,13 @@ source $scriptDir/import/components/CoreGPIO_OUT_C0.tcl
 source $scriptDir/import/components/CoreJTAGDebug_${cjdRstType}_C0.tcl 
 source $scriptDir/import/components/CoreTimer_C0.tcl 
 source $scriptDir/import/components/CoreTimer_C1.tcl 
-if {$config eq "CFG3"} {source $scriptDir/import/components/CoreAXITOAHBL_C0.tcl
+if {$softCpu in {"MIV_RV32IMA_L1_AXI"}} {source $scriptDir/import/components/CoreAXITOAHBL_C0.tcl
 						source $scriptDir/import/components/CoreAXITOAHBL_C1.tcl}
-source $scriptDir/import/components/${legacyCpu}_C0.tcl
+source $scriptDir/import/components/${softCpu}_C0.tcl
 source $scriptDir/import/components/PF_SRAM_AHB_C0.tcl 
+
+# Specify CoreJTAGDebug component (name extension)
+set cjdRstType [expr {$softCpu eq "MIV_RV32" ? "TRSTN" : "TRST"}]
 
 # Creating SmartDesign BaseDesign
 create_smartdesign -sd_name ${sdName}
@@ -53,15 +57,15 @@ sd_create_scalar_port -sd_name ${sdName} -port_name {LED_4} -port_direction {OUT
 
 
 # MIV_RV32IMAx_L1_xxx (Rocketchip - Legacy) common core instance setup
-sd_instantiate_component -sd_name ${sdName} -component_name "${legacyCpu}_C0" -instance_name "${legacyCpu}_C0_0"
-sd_create_pin_slices -sd_name ${sdName} -pin_name "${legacyCpu}_C0_0:IRQ" -pin_slices {[28:0]}
-sd_connect_pins_to_constant -sd_name ${sdName} -pin_names "$legacyCpu\_C0_0:IRQ\[28:0\]" -value {GND}
-sd_create_pin_slices -sd_name ${sdName} -pin_name "${legacyCpu}_C0_0:IRQ" -pin_slices {[29]}
-sd_create_pin_slices -sd_name ${sdName} -pin_name "${legacyCpu}_C0_0:IRQ" -pin_slices {[30]}
-sd_mark_pins_unused -sd_name ${sdName} -pin_names "${legacyCpu}_C0_0:DRV_TDO"
-sd_mark_pins_unused -sd_name ${sdName} -pin_names "${legacyCpu}_C0_0:EXT_RESETN"
-if {$config in {"CFG1" "CFG2"}} {sd_mark_pins_unused -sd_name ${sdName} -pin_names "${legacyCpu}_C0_0:AHB_MST_MEM_HSEL"
-								 sd_mark_pins_unused -sd_name ${sdName} -pin_names "${legacyCpu}_C0_0:AHB_MST_MMIO_HSEL"}
+sd_instantiate_component -sd_name ${sdName} -component_name "${softCpu}_C0" -instance_name "${softCpu}_C0_0"
+sd_create_pin_slices -sd_name ${sdName} -pin_name "${softCpu}_C0_0:IRQ" -pin_slices {[28:0]}
+sd_connect_pins_to_constant -sd_name ${sdName} -pin_names "$softCpu\_C0_0:IRQ\[28:0\]" -value {GND}
+sd_create_pin_slices -sd_name ${sdName} -pin_name "${softCpu}_C0_0:IRQ" -pin_slices {[29]}
+sd_create_pin_slices -sd_name ${sdName} -pin_name "${softCpu}_C0_0:IRQ" -pin_slices {[30]}
+sd_mark_pins_unused -sd_name ${sdName} -pin_names "${softCpu}_C0_0:DRV_TDO"
+sd_mark_pins_unused -sd_name ${sdName} -pin_names "${softCpu}_C0_0:EXT_RESETN"
+if {$softCpu in {"MIV_RV32IMAF_L1_AHB MIV_RV32IMA_L1_AHB"}} {sd_mark_pins_unused -sd_name ${sdName} -pin_names "${softCpu}_C0_0:AHB_MST_MEM_HSEL"
+								 sd_mark_pins_unused -sd_name ${sdName} -pin_names "${softCpu}_C0_0:AHB_MST_MMIO_HSEL"}
 
 
 # Add CORERESET_PF_C0_0 instance
@@ -155,10 +159,10 @@ sd_mark_pins_unused -sd_name ${sdName} -pin_names {CoreUARTapb_C0_0:FRAMING_ERR}
 # Config specific components
 
 # CFG3: Add CoreAXITOAHBL_C0 instance
-if {$config eq "CFG3"} {sd_instantiate_component -sd_name ${sdName} -component_name {CoreAXITOAHBL_C0} -instance_name {CoreAXITOAHBL_C0_0} }
+if {$softCpu in {"MIV_RV32IMA_L1_AXI"}} {sd_instantiate_component -sd_name ${sdName} -component_name {CoreAXITOAHBL_C0} -instance_name {CoreAXITOAHBL_C0_0} }
 
 # CFG3: Add CoreAXITOAHBL_C1 instance
-if {$config eq "CFG3"} {sd_instantiate_component -sd_name ${sdName} -component_name {CoreAXITOAHBL_C1} -instance_name {CoreAXITOAHBL_C1_0} }
+if {$softCpu in {"MIV_RV32IMA_L1_AXI"}} {sd_instantiate_component -sd_name ${sdName} -component_name {CoreAXITOAHBL_C1} -instance_name {CoreAXITOAHBL_C1_0} }
 
 
 # Add scalar net connections
@@ -166,7 +170,7 @@ sd_connect_pins -sd_name ${sdName} -pin_names {"CLKBUF_0:Y" "PF_CCC_C0_0:REF_CLK
 sd_connect_pins -sd_name ${sdName} -pin_names {"CLKBUF_0:PAD" "REF_CLK"}
 sd_connect_pins -sd_name ${sdName} -pin_names {"PF_CCC_C0_0:OUT0_FABCLK_0" "CORERESET_PF_C0_0:CLK"}
 sd_connect_pins -sd_name ${sdName} -pin_names {"PF_CCC_C0_0:PLL_LOCK_0" "CORERESET_PF_C0_0:PLL_LOCK" }
-sd_connect_pins -sd_name ${sdName} -pin_names "PF_CCC_C0_0:OUT0_FABCLK_0 ${legacyCpu}_C0_0:CLK" 
+sd_connect_pins -sd_name ${sdName} -pin_names "PF_CCC_C0_0:OUT0_FABCLK_0 ${softCpu}_C0_0:CLK" 
 sd_connect_pins -sd_name ${sdName} -pin_names "PF_CCC_C0_0:OUT0_FABCLK_0 CoreTimer_C0_0:PCLK"
 sd_connect_pins -sd_name ${sdName} -pin_names "PF_CCC_C0_0:OUT0_FABCLK_0 CoreTimer_C1_0:PCLK"
 sd_connect_pins -sd_name ${sdName} -pin_names {"PF_CCC_C0_0:OUT0_FABCLK_0" "PF_SRAM_AHB_C0_0:HCLK"} 
@@ -176,13 +180,13 @@ sd_connect_pins -sd_name ${sdName} -pin_names {"PF_CCC_C0_0:OUT0_FABCLK_0" "Core
 sd_connect_pins -sd_name ${sdName} -pin_names {"PF_CCC_C0_0:OUT0_FABCLK_0" "CoreGPIO_IN_C0_0:PCLK"}
 sd_connect_pins -sd_name ${sdName} -pin_names {"PF_CCC_C0_0:OUT0_FABCLK_0" "CoreGPIO_OUT_C0_0:PCLK"}
 sd_connect_pins -sd_name ${sdName} -pin_names {"CORERESET_PF_C0_0:FABRIC_RESET_N" "PF_SRAM_AHB_C0_0:HRESETN"}
-if {$config eq "CFG3"} {sd_connect_pins -sd_name ${sdName} -pin_names {"PF_CCC_C0_0:OUT0_FABCLK_0" "CoreAXITOAHBL_C0_0:HCLK" "CoreAXITOAHBL_C0_0:ACLK"}
+if {$softCpu in {"MIV_RV32IMA_L1_AXI"}} {sd_connect_pins -sd_name ${sdName} -pin_names {"PF_CCC_C0_0:OUT0_FABCLK_0" "CoreAXITOAHBL_C0_0:HCLK" "CoreAXITOAHBL_C0_0:ACLK"}
 						sd_connect_pins -sd_name ${sdName} -pin_names {"PF_CCC_C0_0:OUT0_FABCLK_0" "CoreAXITOAHBL_C1_0:HCLK" "CoreAXITOAHBL_C1_0:ACLK"}
 						sd_connect_pins -sd_name ${sdName} -pin_names {"CORERESET_PF_C0_0:FABRIC_RESET_N" "CoreAXITOAHBL_C0_0:HRESETN" "CoreAXITOAHBL_C0_0:ARESETN"}
 						sd_connect_pins -sd_name ${sdName} -pin_names {"CORERESET_PF_C0_0:FABRIC_RESET_N" "CoreAXITOAHBL_C1_0:HRESETN" "CoreAXITOAHBL_C1_0:ARESETN"} }
 
 sd_connect_pins -sd_name ${sdName} -pin_names {"USER_RST" "CORERESET_PF_C0_0:EXT_RST_N"}
-sd_connect_pins -sd_name ${sdName} -pin_names "CORERESET_PF_C0_0:FABRIC_RESET_N ${legacyCpu}_C0_0:RESETN"
+sd_connect_pins -sd_name ${sdName} -pin_names "CORERESET_PF_C0_0:FABRIC_RESET_N ${softCpu}_C0_0:RESETN"
 sd_connect_pins -sd_name ${sdName} -pin_names "CORERESET_PF_C0_0:FABRIC_RESET_N CoreTimer_C0_0:PRESETn"
 sd_connect_pins -sd_name ${sdName} -pin_names "CORERESET_PF_C0_0:FABRIC_RESET_N CoreTimer_C1_0:PRESETn"
 sd_connect_pins -sd_name ${sdName} -pin_names {"CORERESET_PF_C0_0:FABRIC_RESET_N" "CoreAHBL_C0_0:HRESETN"}
@@ -191,15 +195,15 @@ sd_connect_pins -sd_name ${sdName} -pin_names {"CORERESET_PF_C0_0:FABRIC_RESET_N
 sd_connect_pins -sd_name ${sdName} -pin_names {"CORERESET_PF_C0_0:FABRIC_RESET_N" "CoreGPIO_IN_C0_0:PRESETN"}
 sd_connect_pins -sd_name ${sdName} -pin_names {"CORERESET_PF_C0_0:FABRIC_RESET_N" "CoreGPIO_OUT_C0_0:PRESETN"}
 
-sd_connect_pins -sd_name ${sdName} -pin_names "COREJTAGDEBUG_${cjdRstType}_C0_0:TGT_TCK_0 ${legacyCpu}_C0_0:TCK"
-sd_connect_pins -sd_name ${sdName} -pin_names "COREJTAGDEBUG_${cjdRstType}_C0_0:TGT_TDI_0 ${legacyCpu}_C0_0:TDI"
-sd_connect_pins -sd_name ${sdName} -pin_names "COREJTAGDEBUG_${cjdRstType}_C0_0:TGT_TDO_0 ${legacyCpu}_C0_0:TDO"
-sd_connect_pins -sd_name ${sdName} -pin_names "COREJTAGDEBUG_${cjdRstType}_C0_0:TGT_TMS_0 ${legacyCpu}_C0_0:TMS"
-sd_connect_pins -sd_name ${sdName} -pin_names "COREJTAGDEBUG_${cjdRstType}_C0_0:TGT_${cjdRstType}_0 ${legacyCpu}_C0_0:${cjdRstType}" 
+sd_connect_pins -sd_name ${sdName} -pin_names "COREJTAGDEBUG_${cjdRstType}_C0_0:TGT_TCK_0 ${softCpu}_C0_0:TCK"
+sd_connect_pins -sd_name ${sdName} -pin_names "COREJTAGDEBUG_${cjdRstType}_C0_0:TGT_TDI_0 ${softCpu}_C0_0:TDI"
+sd_connect_pins -sd_name ${sdName} -pin_names "COREJTAGDEBUG_${cjdRstType}_C0_0:TGT_TDO_0 ${softCpu}_C0_0:TDO"
+sd_connect_pins -sd_name ${sdName} -pin_names "COREJTAGDEBUG_${cjdRstType}_C0_0:TGT_TMS_0 ${softCpu}_C0_0:TMS"
+sd_connect_pins -sd_name ${sdName} -pin_names "COREJTAGDEBUG_${cjdRstType}_C0_0:TGT_${cjdRstType}_0 ${softCpu}_C0_0:${cjdRstType}" 
 sd_connect_pins -sd_name ${sdName} -pin_names {"CORERESET_PF_C0_0:FPGA_POR_N" "PF_INIT_MONITOR_C0_0:FABRIC_POR_N" }
 sd_connect_pins -sd_name ${sdName} -pin_names {"CORERESET_PF_C0_0:INIT_DONE" "PF_INIT_MONITOR_C0_0:DEVICE_INIT_DONE" }
-sd_connect_pins -sd_name ${sdName} -pin_names "${legacyCpu}_C0_0:IRQ\[29\] CoreTimer_C0_0:TIMINT"
-sd_connect_pins -sd_name ${sdName} -pin_names "${legacyCpu}_C0_0:IRQ\[30\] CoreTimer_C1_0:TIMINT"
+sd_connect_pins -sd_name ${sdName} -pin_names "${softCpu}_C0_0:IRQ\[29\] CoreTimer_C0_0:TIMINT"
+sd_connect_pins -sd_name ${sdName} -pin_names "${softCpu}_C0_0:IRQ\[30\] CoreTimer_C1_0:TIMINT"
 sd_connect_pins -sd_name ${sdName} -pin_names {"CoreUARTapb_C0_0:RX" "RX" }
 sd_connect_pins -sd_name ${sdName} -pin_names {"CoreUARTapb_C0_0:TX" "TX" }
 
@@ -226,12 +230,12 @@ sd_connect_pins -sd_name ${sdName} -pin_names {"CoreAPB3_C0_0:APBmslave2" "CoreG
 sd_connect_pins -sd_name ${sdName} -pin_names {"CoreAPB3_C0_0:APBmslave3" "CoreTimer_C0_0:APBslave" }
 sd_connect_pins -sd_name ${sdName} -pin_names {"CoreAPB3_C0_0:APBmslave4" "CoreTimer_C1_0:APBslave" }
 sd_connect_pins -sd_name ${sdName} -pin_names {"CoreAPB3_C0_0:APBmslave5" "CoreGPIO_OUT_C0_0:APB_bif" }
-if {$config in {"CFG1" "CFG2"}} {sd_connect_pins -sd_name ${sdName} -pin_names "${legacyCpu}_C0_0:AHB_MST_MMIO CoreAHBL_C0_0:AHBmmaster0"
-								 sd_connect_pins -sd_name ${sdName} -pin_names "${legacyCpu}_C0_0:AHB_MST_MEM CoreAHBL_C0_0:AHBmmaster1"}
-if {$config eq "CFG3"} {sd_connect_pins -sd_name ${sdName} -pin_names {"CoreAHBL_C0_0:AHBmmaster0" "CoreAXITOAHBL_C0_0:AHBMasterIF" }
+if {$softCpu in {"MIV_RV32IMAF_L1_AHB MIV_RV32IMA_L1_AHB"}} {sd_connect_pins -sd_name ${sdName} -pin_names "${softCpu}_C0_0:AHB_MST_MMIO CoreAHBL_C0_0:AHBmmaster0"
+								 sd_connect_pins -sd_name ${sdName} -pin_names "${softCpu}_C0_0:AHB_MST_MEM CoreAHBL_C0_0:AHBmmaster1"}
+if {$softCpu in {"MIV_RV32IMA_L1_AXI"}} {sd_connect_pins -sd_name ${sdName} -pin_names {"CoreAHBL_C0_0:AHBmmaster0" "CoreAXITOAHBL_C0_0:AHBMasterIF" }
 						sd_connect_pins -sd_name ${sdName} -pin_names {"CoreAHBL_C0_0:AHBmmaster1" "CoreAXITOAHBL_C1_0:AHBMasterIF" }
-						sd_connect_pins -sd_name ${sdName} -pin_names "${legacyCpu}_C0_0:MMIO_MST_AXI CoreAXITOAHBL_C0_0:AXI_MM_IF"
-						sd_connect_pins -sd_name ${sdName} -pin_names "${legacyCpu}_C0_0:MEM_MST_AXI CoreAXITOAHBL_C1_0:AXI_MM_IF"}
+						sd_connect_pins -sd_name ${sdName} -pin_names "${softCpu}_C0_0:MMIO_MST_AXI CoreAXITOAHBL_C0_0:AXI_MM_IF"
+						sd_connect_pins -sd_name ${sdName} -pin_names "${softCpu}_C0_0:MEM_MST_AXI CoreAXITOAHBL_C1_0:AXI_MM_IF"}
 
 
 # Re-enable auto promotion of pins of type 'pad'

@@ -77,7 +77,6 @@ if {[file exists $projectDir] == 1} then {
 #download_required_direct_cores "$hwPlatform" "$softCpu" "$config"
 
 # Copy the example software program into the project directory (and bootloader elf for DGC1 and DGC2 configs)
-# file copy -force $scriptDir/import/software_example/$cpuGroup/$config/hex $projectDir
 file copy -force $scriptDir/import/software_example/$softCpu/$config/hex $projectDir
 if {$config in {"DGC1" "DGC2"}} {file copy -force $scriptDir/import/software_example/$softCpu/$config/bootloader_elf $projectDir}
 

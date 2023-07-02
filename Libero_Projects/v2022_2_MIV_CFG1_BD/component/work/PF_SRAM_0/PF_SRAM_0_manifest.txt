@@ -1,0 +1,14 @@
+Microchip Technology Inc. - Microchip Libero Software Release v2022.2 (Version 2022.2.0.10)
+
+Date      :  Mon Feb 27 16:54:48 2023
+Project   :  C:\gh-lsd-updates\Future-Avalanche-Board-1\Libero_Projects\MIV_CFG1_BD
+Component :  PF_SRAM_0
+Family    :  PolarFire
+
+
+HDL source files for all Synthesis and Simulation tools:
+    C:/gh-lsd-updates/Future-Avalanche-Board-1/Libero_Projects/MIV_CFG1_BD/component/work/PF_SRAM_0/COREAHBLSRAM_PF_0/rtl/vlog/core/CoreAHBLSRAM_AHBLSram.v
+    C:/gh-lsd-updates/Future-Avalanche-Board-1/Libero_Projects/MIV_CFG1_BD/component/work/PF_SRAM_0/COREAHBLSRAM_PF_0/rtl/vlog/core/CoreAHBLSRAM_AHBLSram_ECC.v
+    C:/gh-lsd-updates/Future-Avalanche-Board-1/Libero_Projects/MIV_CFG1_BD/component/work/PF_SRAM_0/COREAHBLSRAM_PF_0/rtl/vlog/core/CoreAHBLSRAM_PF.v
+    C:/gh-lsd-updates/Future-Avalanche-Board-1/Libero_Projects/MIV_CFG1_BD/component/work/PF_SRAM_0/PF_SRAM_0.v
+

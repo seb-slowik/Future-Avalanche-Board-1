@@ -2,7 +2,7 @@
 This folder contains Tcl scripts that build Libero SoC v2023.1 design projects for the Future Avalanche Board. These scripts are executed in Libero SoC to generate the sample designs. All Configuration (CFG) design cores boot from memory at 0x8000_0000.
 
 > MI-V Extended Subsystem Design Guide Configurations:
-> * For **Design Guide Configuration - DGC2: I2C Write & Boot** refer to this [DGC2 README](import/components/IMC_DGC2/README.md)
+> * For **Design Guide Configuration - DGC2: I2C Write & Boot** refer to this [DGC2 README](docs/design_dgc4/README.md)
 
 
 #### PF_Avalanche_MIV_RV32_BaseDesign

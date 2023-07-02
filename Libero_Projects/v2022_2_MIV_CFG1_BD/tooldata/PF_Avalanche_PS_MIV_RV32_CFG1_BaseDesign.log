@@ -1,0 +1,16 @@
+Project Name: PF_Avalanche_PS_MIV_RV32_CFG1_BaseDesign
+Location: C:\gh-lsd-updates\Future-Avalanche-Board-1\Libero_Projects\MIV_CFG1_BD
+Description: 
+Preferred HDL Type: Verilog
+
+#-----------------------------------------------------
+                  Device Details
+#-----------------------------------------------------
+
+Part Number    : MPF300TS-FCG484I
+Family         : PolarFire
+Die            : MPF300TS
+Package        : FCG484
+Speed          : STD
+Core Voltage   : 1.0
+Range          : IND

@@ -6,7 +6,7 @@ This folder contains Tcl scripts that build Libero SoC v2023.1 MIV_ESS DGC2 desi
 
 | Config  | Description |
 | :------:|:----------------------------------------|
-| DGC2    | This design uses the **MIV_RV32** core configured as follows: <ul><li>RISC-V Extensions: IMC</li><li>Multiplier: MACC (Pipelined)</li><li>Interfaces: AHB Master (mirrored), APB3 Master</li><li>Reset Vector Address: 0x4000_0000</li><li>Internal IRQs: 6</li><li>TCM: Enabled</li><li>TCM APB Slave (TAS): Enabled</li><li>System Timer: Internal MTIME enabled, Internal MTIME IRQ enabled</li><li>Debug: enabled</li></ul>This design uses the **MIV_ESS** core configured as follows: <ul><li>Bootstrap: Enabled</li><li>Bootstrap Source: I2C</li><li>uDMA: Disabled</li><li>GPIO: Enabled, 2 GPIO_IN and 4 GPIO_OUT (fixed config)</li><li>I2C: Enabled, Two-Byte I2C Address</li><li>PLIC: Disabled</li><li>SPI: Disabled</li><li>Timer: Disabled</li><li>UART: Enabled</li><li>Watchdog: Disabled</li></ul>|
+| DGC2    | This design uses the **MIV_RV32** core configured as follows: <ul><li>RISC-V Extensions: IMC</li><li>Multiplier: MACC (Pipelined)</li><li>Interfaces: AHBL Initiator (mirrored), APB3 Initiator</li><li>Reset Vector Address: 0x4000_0000</li><li>Internal IRQs: 6</li><li>TCM: Enabled</li><li>TCM APB Target (TAS): Enabled</li><li>System Timer: Internal MTIME enabled, Internal MTIME IRQ enabled</li><li>Debug: enabled</li></ul>This design uses the **MIV_ESS** core configured as follows: <ul><li>Bootstrap: Enabled</li><li>Bootstrap Source: I2C</li><li>uDMA: Disabled</li><li>GPIO: Enabled, 2 GPIO_IN and 4 GPIO_OUT (fixed config)</li><li>I2C: Enabled, Two-Byte I2C Address</li><li>PLIC: Disabled</li><li>SPI: Disabled</li><li>Timer: Disabled</li><li>UART: Enabled</li><li>Watchdog: Disabled</li></ul>|
 
 > This design configuration is only available for the PolarFire Avalanche Kit (Revision 3 with production silicon devices).
 
@@ -97,7 +97,7 @@ A more detailed description of the boot sequence can be found in this section.
 > * Initiating the Boot Sequence for DGC2, requires data to be previously written to external memory I2C EEPROM. Use the provided Bootloader .elf program *miv-rv32-ess-bootloader.elf* to write the *miv-rv32i-systick-blinky.hex* program in the LSRAM to the external memory I2C Flash.
 
     1. Once the board has been powered-on, hold SW1 to enable the Bootstrap functionality in the MIV_ESS. Then press and release SW2 to perform a system reset request.
-    2. MIV_ESS copies a program from the I2C Flash device to the MIV_RV32 Tightly-Coupled Memory (TCM) via the TCM APB Slave (TAS) interface.
+    2. MIV_ESS copies a program from the I2C Flash device to the MIV_RV32 Tightly-Coupled Memory (TCM) via the TCM APB Target (TAS) interface.
     3. When the transfer from I2C Flash is complete, MIV_ESS releases MIV_RV32 core from reset and MIV_RV32 is allowed to boot the program from TCM.
     4. The LEDs on the Future Avalanche Board will start blinking, signifying Bootstrap has completed its transfer and SW1 can then be released.   
 

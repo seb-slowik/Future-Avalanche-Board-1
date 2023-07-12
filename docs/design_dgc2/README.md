@@ -72,8 +72,8 @@ To run the Bootloader .elf program, follow the steps below or refer to the *MIV_
     3. In the Main window, select C/C++ Applications using the Browse button, then navigate to your Libero's project directory ./MIV_RV32_DGC2_BD and select the Bootloader .elf file
     4. Select "Disable auto build" option
     5. Select the Debugger tab to set up OpenOCD and GDB
-        a. To set up OpenOCD, check the Start OpenOCD locally check box and manually edit the OpenOCD path by selecting browse to <SoftConsole-install-directory>\openocd\bin\openocd.exe
-        b. To set up GDB, browse to the GDB path <SoftConsole-install-directory>\riscv-unknownelf-gcc\bin\riscv64-unknown-elf-gdb.exe.
+        a. To set up OpenOCD, check the Start OpenOCD locally check box and browse to manually set the OpenOCD path <SoftConsole-install-directory>\openocd\bin\openocd.exe
+        b. To set up GDB, browse to manually set the GDB path <SoftConsole-install-directory>\riscv-unknownelf-gcc\bin\riscv64-unknown-elf-gdb.exe.
     6. Click Apply
     7. Click Debug to launch the debug session. 
 
